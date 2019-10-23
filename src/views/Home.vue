@@ -1,18 +1,29 @@
 <template>
   <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <add-todo :addTodos="addTodos" />
+    <todo-list :todos="todos" :deleteTodo="deleteTodo"/>
   </div>
 </template>
 
-<script>
+<script lang="ts">
 // @ is an alias to /src
-import HelloWorld from '@/components/HelloWorld.vue';
+import {createComponent} from '@vue/composition-api';
+import AddTodo from '@/components/AddTodo.vue';
+import TodoList from '@/components/TodoList.vue';
+import {useTodos} from '@/composition/Todo';
 
-export default {
-  name: 'home',
+export default createComponent({
   components: {
-    HelloWorld,
+    AddTodo,
+    TodoList,
   },
-};
+  setup() {
+    const {todos, addTodos, deleteTodo} = useTodos();
+    return {
+      todos,
+      addTodos,
+      deleteTodo,
+    };
+  },
+});
 </script>
